@@ -1,11 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {BsDatepickerConfig} from "ngx-bootstrap/datepicker";
 import {dateService} from "./date-panel.service";
-
 @Component({
   selector: 'app-date-panel',
   templateUrl: './date-panel.component.html',
-  styleUrls: ['./date-panel.component.scss'],
+  styleUrls: ['./date-panel.component.css'],
   providers: [dateService]
 })
 export class DatePanelComponent implements OnInit {
@@ -16,18 +15,24 @@ export class DatePanelComponent implements OnInit {
   cancelList: any[] = [];
   list: any[];
   Msg: boolean = false;
-
-  constructor(private _dateService:dateService){
+  cols: any[];
+  constructor(private _dateService:dateService) {
   }
 
   ngOnInit() {
     this.fetchData(new Date());
+    this. cols = [
+      { field: 'vin', header: 'Vin' },
+      { field: 'year', header: 'Year' },
+      { field: 'brand', header: 'Brand' },
+      { field: 'color', header: 'Color' }
+    ];
   }
   fetchData(date) {
     this.list = this._dateService.getList();
     for (const item of this.list) {
       if (item.bookId) {
-        item.isBooked = true
+        item.isBooked = true;
       }
     }
   }
@@ -82,5 +87,5 @@ export class DatePanelComponent implements OnInit {
         this.showMsg = true;
      }
   }
-  }
+}
 

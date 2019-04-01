@@ -3,7 +3,7 @@
     <bs-datepicker-inline [bsValue]="value" (bsValueChange)=" onDateChange($event)"></bs-datepicker-inline>
   </div>
 </div>
-  <div class="col-xs-12 col-12 col-md-4" *ngIf="value">
+ <div class="col-xs-12 col-12 col-md-4" *ngIf="value">
     <div *ngFor="let item of list" class="item">
       <span class="label">{{item.name}}</span>
       <button  *ngIf="!item.isBooked" class="btn btn-attention" (click)="book(item)">Book</button>
@@ -12,4 +12,21 @@
     <button class="btn btn-primary" (click)="submit()">submit</button>
     <span *ngIf="showMsg">you can't book more than one appointment></span>
   </div>
-
+<!--
+<p-table [columns]="cols" [value]="cars">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-car let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{car[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+-->
