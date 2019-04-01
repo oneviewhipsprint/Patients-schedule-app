@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-12 col-12 col-md-4 form-group">
+    <bs-datepicker-inline [bsValue]="value" (bsValueChange)=" onDateChange($event)"></bs-datepicker-inline>
+  </div>
+</div>
+  <div class="col-xs-12 col-12 col-md-4" *ngIf="value">
+    <div *ngFor="let item of list" class="item">
+      <span class="label">{{item.name}}</span>
+      <button  *ngIf="!item.isBooked" class="btn btn-attention" (click)="book(item)">Book</button>
+        <button *ngIf="item.isBooked" class="btn btn-danger" (click)="book(item)">Cancel</button>
+    </div>
+    <button class="btn btn-primary" (click)="submit()">submit</button>
+    <span *ngIf="showMsg">you can't book more than one appointment></span>
+  </div>
+
