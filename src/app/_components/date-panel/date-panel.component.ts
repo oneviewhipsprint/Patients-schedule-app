@@ -9,83 +9,40 @@ import {dateService} from "./date-panel.service";
 })
 export class DatePanelComponent implements OnInit {
   value: any;
-  isOpen = true;
-  showMsg: boolean = false;
   bookList: any[] = [];
   cancelList: any[] = [];
-  list: any[];
-  Msg: boolean = false;
-  cols: any[];
+  lists: any;
+  schdule:any[];
+  chairInfo: any;
+  slotInfo: any;
   constructor(private _dateService:dateService) {
   }
 
   ngOnInit() {
     this.fetchData(new Date());
-    this. cols = [
-      { field: 'vin', header: 'Vin' },
-      { field: 'year', header: 'Year' },
-      { field: 'brand', header: 'Brand' },
-      { field: 'color', header: 'Color' }
-    ];
   }
   fetchData(date) {
-    this.list = this._dateService.getList();
-    for (const item of this.list) {
-      if (item.bookId) {
-        item.isBooked = true;
-      }
-    }
+    this.lists = this._dateService.getList();
   }
+  onClick(col, shift) {
+    this.chairInfo = col;
+    this.slotInfo = shift;
+    console.log(this.chairInfo);
+    console.log(this.slotInfo);
 
-  book(data) {
-    data.isBooked = !data.isBooked;
-    if (!data.bookId) {
-      if (data.isBooked) {
-        this.bookList.push(data);
-      } else {
-        for (let i = 0; i < this.bookList.length; i++) {
-          const item = this.bookList[i];
-          if (item.id === data.id) {
-            this.bookList.splice(i, 1);
-            break;
-          }
-        }
-      }
-    } else {
-      if (!data.isBooked) {
-        this.cancelList.push(data);
-      } else {
-        for (let i = 0; i < this.cancelList.length; i++) {
-          const item = this.cancelList[i];
-          if (item.id === data.id) {
-            this.cancelList.splice(i, 1);
-            break;
-          }
-        }
-      }
-      console.log(this.cancelList)
-    }
   }
-
   onDateChange(event) {
     this.value = event;
-    this.fetchData(this.value);
-
+    // this.fetchData(this.value);
+    this.schdule = this._dateService.getSchedule();
   }
-  submit() {
-      for (const item of this.list) {
-        if (item.bookId && item.isBooked) {
-          return;
-        }
+  isActionDisabled(col, shift) {
+    for(const item of this.schdule) {
+      if (item.shiftName.toLowerCase() === shift.shiftName.toLowerCase() && item.chair.toLowerCase() === col.chairName.toLowerCase()) {
+        return false;
       }
-     if (this.bookList.length === 1 || this.cancelList.length === 1 ) {
-     this.showMsg = false;
-     console.log(this.value);
-     console.log(this.bookList);
-     console.log(this.cancelList);
-     } else {
-        this.showMsg = true;
-     }
+    }
+    return true;
   }
 }
 
