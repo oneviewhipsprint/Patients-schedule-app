@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 
 import {Clinic, User} from '@app/_models';
-import {UserService, AuthenticationService, SchedulesService} from '@app/_services';
+import {UserService, AuthenticationService, SchedulesService, AlertService} from '@app/_services';
 import {Schedule, WaitList} from "@app/_models/schedules-models";
 
 @Component({templateUrl: 'home.component.html'})
@@ -17,12 +17,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     constructor(private authenticationService: AuthenticationService,
                 private userService: UserService,
-                private scheduleService: SchedulesService) {
+                private scheduleService: SchedulesService,
+                private alertService: AlertService) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
             this.currentUser = user;
             this.scheduleService.getClinic(1).subscribe((clinic: Clinic) => {
-                console.log("clinic" + JSON.stringify(clinic));
+                // console.log("clinic" + JSON.stringify(clinic));
                 this.clinic = clinic;
+                this.alertService.success("we have your waiting list slot available for date,please click on date to book it","04-03-2019");
+            });
+
+            this.alertService.subscribeToAlertLink().subscribe((data) => {
+                if(data) {
+                    this.onDateSelected(data);
+                }
             })
         });
     }

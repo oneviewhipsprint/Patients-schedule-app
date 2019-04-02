@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AlertService {
     private subject = new Subject<any>();
+    private linkClicked = new Subject<any>();
     private keepAfterNavigationChange = false;
 
     constructor(private router: Router) {
@@ -22,9 +23,9 @@ export class AlertService {
         });
     }
 
-    success(message: string, keepAfterNavigationChange = false) {
+    success(message: string,link?: any, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
+        this.subject.next({ type: 'success', text: message, link: link});
     }
 
     error(message: string, keepAfterNavigationChange = false) {
@@ -35,4 +36,14 @@ export class AlertService {
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }
+
+    setLinkData(data:any){
+        this.linkClicked.next(data);
+    }
+
+    subscribeToAlertLink(): Observable<any>{
+        return this.linkClicked.asObservable();
+    }
+
+
 }
