@@ -6,7 +6,9 @@ import {Clinic, User} from '@app/_models';
 import {UserService, AuthenticationService, SchedulesService, AlertService} from '@app/_services';
 import {Schedule, WaitList} from "@app/_models/schedules-models";
 
-@Component({templateUrl: 'home.component.html'})
+@Component({templateUrl: 'home.component.html',
+    styleUrls: ['./home.component.scss'],
+})
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
