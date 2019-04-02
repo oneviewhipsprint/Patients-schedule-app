@@ -24,12 +24,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.scheduleService.getClinic(1).subscribe((clinic: Clinic) => {
                 // console.log("clinic" + JSON.stringify(clinic));
                 this.clinic = clinic;
-                this.alertService.success("we have your waiting list slot available for date,please click on date to book it", "04-03-2019");
+                this.alertService.success("we have your waiting list slot available for date, please click on date to book it", "2019-04-02");
             });
 
             this.alertService.subscribeToAlertLink().subscribe((data) => {
                 if (data) {
-                    this.onDateSelected(data);
+                    this.onDateSelected({},data);
                 }
             });
         });
@@ -60,8 +60,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.togglePanel = false;
     }
 
-    onDateSelected(event: any) {
-        const selectedDate = moment(event.selectedDate).format("YYYY-MM-DD");
+    onDateSelected(event: any, date?:string) {
+        const selectedDate = date ? date : moment(event.selectedDate).format("YYYY-MM-DD");
         this.scheduleService.getSchedules(selectedDate).subscribe((schedule) => {
             console.log("Schedules" + JSON.stringify(schedule));
             this.schedules = schedule;
