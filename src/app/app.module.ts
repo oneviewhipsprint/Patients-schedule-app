@@ -16,11 +16,13 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {AdminComponent} from "./admin";
+import {TableComp} from "@app/_components/table/table.component";
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        TableModule,
         BsDatepickerModule.forRoot(),
         HttpClientModule,
         routing
@@ -32,6 +34,7 @@ import {AdminComponent} from "./admin";
         HomeComponent,
         LoginComponent,
         DatePanelComponent,
+        TableComp,
         SlidePanelComponent,
         RegisterComponent
     ],
