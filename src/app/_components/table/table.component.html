@@ -1,16 +1,13 @@
-﻿<app-date-panel (dateSelected)="onDateSelected($event)"></app-date-panel>
-<slide-panel [isOpen]="togglePanel" [title]="'Schedule Appointment'"
-             (closeSlidePanel)="onPanelClose()" id="demo-slide-panel">
-    <div panel-body>
-        <div>
-            <table>
-                <thead>
-                <th *ngFor="let chair of clinic.chairs">{{chair.chairName}}</th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let shift of clinic.shifts">
-                    {{shift.shiftName}}
-                    <td *ngFor="let chair of clinic.chairs">
+
+<div>
+    <table>
+        <thead>
+        <th *ngFor="let chair of clinic.chairs">{{chair.chairName}}</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let shift of clinic.shifts">
+            {{shift.shiftName}}
+            <td *ngFor="let chair of clinic.chairs">
                             <span *ngFor="let schedule of schedules">
                             <span *ngIf="schedule.shiftId === shift.shiftId && schedule.chairId === chair.chairId">
                                 <span *ngIf="schedule.patientId && schedule.patientId === currentUser.id">
@@ -24,10 +21,9 @@
                                 </span>
                             </span>
                             </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</slide-panel>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
