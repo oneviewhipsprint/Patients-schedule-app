@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+﻿import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDatepickerModule, BsLocaleService  } from 'ngx-bootstrap/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -36,6 +36,10 @@ import {TableComp} from "@app/_components/table/table.component";
         TableComp,
         SlidePanelComponent,
         RegisterComponent
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

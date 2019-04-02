@@ -2,25 +2,34 @@
 <slide-panel [isOpen]="togglePanel" [title]="'Schedule Appointment'"
              (closeSlidePanel)="onPanelClose()" id="demo-slide-panel">
     <div panel-body>
+        <span class="info"><ion-icon size="small" name="checkmark-circle"></ion-icon> To book a slot</span>
+        <span> <ion-icon size="small" class="close-circle" name="close-circle"></ion-icon>To Cancel a slot</span>
+        <span><ion-icon  size="small" name="contacts"></ion-icon>To add to waitlist</span>
         <div>
             <table>
                 <thead>
+                <tr class="header">
+                    <th></th>
                 <th *ngFor="let chair of clinic.chairs">{{chair.chairName}}</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let shift of clinic.shifts">
-                    {{shift.shiftName}}
-                    <td *ngFor="let chair of clinic.chairs">
+                    <span class="label">{{shift.shiftName}}</span>
+                    <td  class="header" *ngFor="let chair of clinic.chairs">
                             <span *ngFor="let schedule of schedules">
                             <span *ngIf="schedule.shiftId === shift.shiftId && schedule.chairId === chair.chairId">
                                 <span *ngIf="schedule.patientId && schedule.patientId === currentUser.id">
-                                     <button (click)="cancelSchedule(schedule.scheduleId)">Cancel Schedule</button>
+                                     <ion-icon name="close-circle"(click)="cancelSchedule(schedule.scheduleId)"></ion-icon>
+                                    <!-- <button class="button" (click)="cancelSchedule(schedule.scheduleId)">Cancel Schedule</button>-->
                                 </span>
                                 <span *ngIf="schedule.patientId && schedule.patientId !== currentUser.id">
-                                       <button (click)="addToWaitList(schedule)">Add to Waitlist</button>
+                                     <ion-icon  name="contacts"(click)="addToWaitList(schedule)"></ion-icon>
+                                      <!-- <button  (click)="addToWaitList(schedule)">Add to Waitlist</button>-->
                                 </span>
                                  <span *ngIf="!schedule.patientId">
-                                       <button (click)="bookSchedule(schedule)">Book Schedule</button>
+                                <ion-icon  name="checkmark-circle"(click)="bookSchedule(schedule)"></ion-icon>
+                                    <!-- <button (click)="bookSchedule(schedule)">Book Schedule</button>-->
                                 </span>
                             </span>
                             </span>
