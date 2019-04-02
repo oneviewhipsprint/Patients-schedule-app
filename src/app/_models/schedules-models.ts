@@ -22,3 +22,13 @@ export class Schedule {
     shiftId?: any;
     shiftDate?: any;
 }
+
+export class WaitList {
+    scheduleId?: any;
+    patientId?: any;
+    clinicId?: any;
+    chairId?: any;
+    shiftId?: any;
+    shiftDate?: any;
+    status?: any;
+}

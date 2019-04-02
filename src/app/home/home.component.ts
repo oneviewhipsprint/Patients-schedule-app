@@ -4,7 +4,7 @@ import {first} from 'rxjs/operators';
 
 import {Clinic, User} from '@app/_models';
 import {UserService, AuthenticationService, SchedulesService} from '@app/_services';
-import {Schedule} from "@app/_models/schedules-models";
+import {Schedule, WaitList} from "@app/_models/schedules-models";
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit, OnDestroy {
@@ -62,7 +62,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     addToWaitList() {
-        this.scheduleService.addToWaitList("1", this.schedules[0]).subscribe((schedule) => {
+        const waitList: WaitList = this.schedules[0];
+        waitList.status = 'pending';
+        this.scheduleService.addToWaitList("1", waitList).subscribe((schedule) => {
             console.log("added to wait list succesfully");
         });
     }

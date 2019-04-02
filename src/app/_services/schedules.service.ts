@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '@environments/environment';
 import {Observable} from "rxjs/index";
 import {Clinic, Schedule} from "@app/_models";
+import {WaitList} from "@app/_models/schedules-models";
 
 @Injectable({providedIn: 'root'})
 export class SchedulesService {
@@ -25,7 +26,7 @@ export class SchedulesService {
         return this.http.post<any>(`${environment.apiUrl}/v1/patients/` + patientId + `/schedules/` + scheduleId, {});
     }
 
-    addToWaitList(patientId: string, waitList: any): Observable<any> {
+    addToWaitList(patientId: string, waitList: WaitList): Observable<any> {
         return this.http.post<any>(`${environment.apiUrl}/v1/patients/` + patientId + `/waitList`, waitList);
     }
 
