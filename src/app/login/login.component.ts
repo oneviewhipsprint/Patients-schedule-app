@@ -65,26 +65,34 @@ export class LoginComponent implements OnInit {
   setupPatients() {
     localStorage.clear();
     const user: User = {};
-    user.firstName = 'bibbs';
+    user.firstName = 'Gerry';
     user.id = 1;
-    user.lastName = 'marg';
+    user.lastName = 'Garcia';
     user.password = 'davita';
-    user.username = 'bibs';
+    user.username = 'gerrygarcia';
     this.users.push(user);
     const user2: User = {};
-    user2.firstName = 'patteson';
+    user2.firstName = 'Jim';
     user2.id = 2;
-    user2.lastName = 'g';
+    user2.lastName = 'Morrison';
     user2.password = 'davita';
-    user2.username = 'patteson';
+    user2.username = 'jimmorrison';
     this.users.push(user2);
     const user3: User = {};
-    user3.firstName = 'test';
+    user3.firstName = 'Janis';
     user3.id = 3;
-    user3.lastName = 'test2';
+    user3.lastName = 'Joplin';
     user3.password = 'davita';
-    user3.username = 'test';
+    user3.username = 'janisjoplin';
     this.users.push(user3);
+    const user4: User = {};
+    user4.firstName = 'hhelderman';
+    user4.id = 4;
+    user4.lastName = 'J';
+    user4.password = 'davita';
+    user4.username = 'hhelderman';
+    user4.isAdmin= true;
+    this.users.push(user4);
     localStorage.setItem('users', JSON.stringify(this.users));
   }
 }

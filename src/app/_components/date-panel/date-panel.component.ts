@@ -16,6 +16,7 @@ export class DatePanelComponent implements OnInit {
   cancelList: any[] = [];
   list: any[];
   Msg: boolean = false;
+  @Output() dateSelected:EventEmitter<any> = new EventEmitter();
 
   constructor(private _dateService:dateService){
   }
@@ -65,7 +66,7 @@ export class DatePanelComponent implements OnInit {
   onDateChange(event) {
     this.value = event;
     this.fetchData(this.value);
-
+    this.dateSelected.emit({selectedDate: this.value});
   }
   submit() {
       for (const item of this.list) {

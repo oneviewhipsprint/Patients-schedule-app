@@ -1,1 +1,27 @@
-﻿<app-date-panel></app-date-panel>
+﻿<app-date-panel (dateSelected)="onDateSelected($event)"></app-date-panel>
+<slide-panel [isOpen]="togglePanel" [title]="'Schedule Appointment'"
+             (closeSlidePanel)="onPanelClose()" id="demo-slide-panel">
+    <div panel-body>
+        <br>
+        <div>
+            <span>Chairs available for clinic</span>
+            {{clinic.chairs | json}}
+        </div>
+        <br>
+        <div>
+            <span>Shifts available for clinic</span>
+            {{clinic.shifts | json}}
+        </div>
+        <br>
+        <div>
+            <span>Schedules booked for clinic</span>
+            {{schedules | json}}
+        </div>
+        <br>
+        <div>
+            <button (click)="bookSchedule()">Book Schedule</button>
+            <button (click)="cancelSchedule()">Cancel Schedule</button>
+            <button (click)="addToWaitList()">Add to Waitlist</button>
+        </div>
+    </div>
+</slide-panel>

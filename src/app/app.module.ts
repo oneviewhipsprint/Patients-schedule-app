@@ -10,12 +10,12 @@ import { fakeBackendProvider } from './_helpers';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 
-import { AlertComponent } from './_components';
+import { AlertComponent, DatePanelComponent,SlidePanelComponent } from './_components';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
-import {DatePanelComponent} from "@app/_components/date-panel/date-panel.component";
+import {AdminComponent} from "./admin";
 
 @NgModule({
     imports: [
@@ -28,9 +28,11 @@ import {DatePanelComponent} from "@app/_components/date-panel/date-panel.compone
     declarations: [
         AppComponent,
         AlertComponent,
+        AdminComponent,
         HomeComponent,
         LoginComponent,
         DatePanelComponent,
+        SlidePanelComponent,
         RegisterComponent
     ],
     providers: [
