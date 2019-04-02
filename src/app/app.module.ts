@@ -1,7 +1,7 @@
-﻿import { NgModule }      from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDatepickerModule, BsLocaleService  } from 'ngx-bootstrap/datepicker';
-import { ReactiveFormsModule }  from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
