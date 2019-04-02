@@ -22,7 +22,6 @@ import {TableComp} from "@app/_components/table/table.component";
     imports: [
         BrowserModule,
         ReactiveFormsModule,
-        TableModule,
         BsDatepickerModule.forRoot(),
         HttpClientModule,
         routing
