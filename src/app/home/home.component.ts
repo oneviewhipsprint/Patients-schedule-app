@@ -5,6 +5,7 @@ import * as moment from 'moment/moment';
 import {Clinic, User} from '@app/_models';
 import {UserService, AuthenticationService, SchedulesService, AlertService} from '@app/_services';
 import {Schedule, WaitList} from "@app/_models/schedules-models";
+import {NotificationsService} from "@app/_services/notifications.service";
 
 @Component({templateUrl: 'home.component.html',
     styleUrls: ['./home.component.scss'],
@@ -20,13 +21,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private authenticationService: AuthenticationService,
                 private userService: UserService,
                 private scheduleService: SchedulesService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private notificationService: NotificationsService) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
             this.currentUser = user;
             this.scheduleService.getClinic(1).subscribe((clinic: Clinic) => {
                 // console.log("clinic" + JSON.stringify(clinic));
                 this.clinic = clinic;
-                this.alertService.success("we have your waiting list slot available for date, please click on date to book it", "2019-04-02");
             });
 
             this.alertService.subscribeToAlertLink().subscribe((data) => {
@@ -34,6 +35,14 @@ export class HomeComponent implements OnInit, OnDestroy {
                     this.onDateSelected({},data);
                 }
             });
+
+            this.notificationService.getNotifications().subscribe((data:any) => {
+               if(this.currentUser.id === data.patientId) {
+                    const date: string = "" + data.shiftDate.toString();
+                    const message: string = "" + data.text.toString();
+                    this.alertService.success(message, date);
+               }
+            })
         });
     }
 
