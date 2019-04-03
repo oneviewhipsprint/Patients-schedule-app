@@ -26,15 +26,17 @@
                     <td  class="header" *ngFor="let chair of clinic.chairs">
                             <span *ngFor="let schedule of schedules">
                                  <span *ngIf="schedule.shiftId === shift.shiftId && schedule.chairId === chair.chairId;else book;">
-                                <span *ngIf="schedule.patientId && schedule.patientId === currentUser.id">
-                                     <ion-icon name="close-circle"(click)="cancelSchedule(schedule.scheduleId)"></ion-icon>
-                                </span>
-                                <span *ngIf="schedule.patientId && schedule.patientId !== currentUser.id">
-                                     <ion-icon  name="contacts"(click)="addToWaitList(schedule)"></ion-icon>
-                                </span>
-                                 <span *ngIf="!schedule.patientId">
-                                <ion-icon  name="checkmark-circle"(click)="bookSchedule(schedule)"></ion-icon>
-                                </span>
+                                     <span *ngIf="schedule.patientId && schedule.patientId == currentUser.id">
+                                         <ion-icon name="person"></ion-icon>
+                                         <ion-icon name="close-circle"(click)="cancelSchedule(schedule.scheduleId)"></ion-icon>
+                                     </span>
+
+                                     <span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && isAlreadyWaitListed(shift.shiftId, chair.chairId)">
+                                         <ion-icon name="people"></ion-icon>
+                                     </span>
+                                     <span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && !isAlreadyWaitListed(shift.shiftId, chair.chairId)">
+                                         <ion-icon  name="person-add" (click)="addToWaitList(schedule)"></ion-icon>
+                                     </span>
                             </span>
                             </span>
                     </td>

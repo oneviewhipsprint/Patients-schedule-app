@@ -27,7 +27,7 @@ export class SchedulesService {
     }
 
     addToWaitList(patientId: string, waitList: WaitList): Observable<any> {
-        return this.http.post<any>(`${environment.apiUrl}/v1/patients/` + patientId + `/waitList`, waitList);
+        return this.http.post<any>(`${environment.apiUrl}/v1/patients/` + patientId + `/waitLists`, waitList);
     }
 
 

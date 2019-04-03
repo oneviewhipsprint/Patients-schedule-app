@@ -91,8 +91,15 @@ export class LoginComponent implements OnInit {
     user4.lastName = 'J';
     user4.password = 'davita';
     user4.username = 'hhelderman';
-    user4.isAdmin= true;
+    user4.isAdmin = true;
     this.users.push(user4);
+    const user5: User = {};
+    user5.firstName = 'Freddy';
+    user5.id = '5';
+    user5.lastName = 'Mercury';
+    user5.password = 'davita';
+    user5.username = 'fremercury';
+    this.users.push(user5);
     localStorage.setItem('users', JSON.stringify(this.users));
   }
 }
