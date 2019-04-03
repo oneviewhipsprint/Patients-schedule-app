@@ -1,10 +1,11 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import {Component, OnInit, OnDestroy, Output, EventEmitter, Input} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AlertService } from '@app/_services';
+import {isUndefined} from "ngx-bootstrap/chronos/utils/type-checks";
 
 @Component({
-    selector: 'alert',
+    selector: "alert",
     templateUrl: 'alert.component.html'
 })
 
@@ -15,8 +16,8 @@ export class AlertComponent implements OnInit, OnDestroy {
     constructor(private alertService: AlertService) { }
 
     ngOnInit() {
-        this.subscription = this.alertService.getMessage().subscribe(message => { 
-            this.message = message; 
+        this.subscription = this.alertService.getMessage().subscribe(message => {
+            this.message = message;
         });
     }
 
@@ -26,5 +27,9 @@ export class AlertComponent implements OnInit, OnDestroy {
 
     linkClicked(event){
         this.alertService.setLinkData(event);
+    }
+
+    close() {
+        this.message = undefined;
     }
 }

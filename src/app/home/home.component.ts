@@ -84,17 +84,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         const waitList: WaitList = schedule;
         waitList.status = 'pending';
         this.scheduleService.addToWaitList(this.currentUser.id, waitList).subscribe((schedule) => {
-            console.log("added to wait list succesfully");
-        });
+            const msg = 'added to wait list succesfully';
+            this.alertService.success(msg);
+            });
     }
     cancelSchedule(scheduleId: string) {
         this.scheduleService.cancelSchedule(this.currentUser.id, scheduleId).subscribe((schedule) => {
-            console.log("canceled succesfully");
-        });
+           const msg ='canceled Successfully';
+            this.alertService.success(msg);
+            });
     }
     bookSchedule(schedule: Schedule) {
         this.scheduleService.bookSchedule(this.currentUser.id, schedule).subscribe((schedule) => {
-            console.log("Booked succesfully");
+            const msg ='Booked succesfully';
+            this.alertService.success(msg);
         });
     }
 }
