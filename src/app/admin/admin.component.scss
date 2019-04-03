@@ -1,0 +1,39 @@
+ table {
+   margin:100px;
+     border: 1px solid;
+     width: 700px;
+     height:400px;
+     tr{
+       border: 1px solid;
+         th {
+             padding-left: 50px;
+         }
+     }
+     .header {
+         padding: 10px;
+     }
+     tbody {
+         tr {
+                .label {
+                  font-weight: bold;
+                  padding-left:20px !important;
+                }
+             td {
+                 border: 1px solid;
+             }
+         }
+     }
+ }
+ ion-icon {
+   font-size: 44px;
+   padding-left: 10px;
+   color:royalblue;
+ }
+
+.info {
+  margin-top: 10px;
+  .time {
+    font-weight: bold;
+    padding:40px;
+  }
+}

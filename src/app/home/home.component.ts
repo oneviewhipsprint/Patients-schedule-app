@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     schedules: Schedule[] = [];
     waitLists: WaitList[] = [];
     clinic: Clinic = {};
+    completeSchedules: Schedule[]=[];
     selectedDate: string;
 
     constructor(private authenticationService: AuthenticationService,
@@ -80,13 +81,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     onDateSelected(event: any, date?:string) {
         this.selectedDate = date ? date : moment(event.selectedDate).format("YYYY-MM-DD");
+        this.completeSchedules = this.formatSchedule();
         this.getSchedules(this.selectedDate);
     }
 
     private getSchedules(selectedDate: string) {
         this.scheduleService.getSchedules(selectedDate).subscribe((schedule) => {
-            console.log("Schedules" + JSON.stringify(schedule));
-            this.schedules = schedule;
+            console.log("Orginal Schedules" + JSON.stringify(schedule));
+            this.schedules = this.getCompleteSchedules(schedule);
+            console.log("Schedules" + JSON.stringify(this.schedules));
             this.waitListsService.getWaitLists(this.currentUser.id, selectedDate).subscribe((waitLists) => {
                 console.log("waitList" + JSON.stringify(waitLists));
                 this.waitLists = waitLists;
@@ -105,25 +108,60 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         waitList.status = 'pending';
         this.scheduleService.addToWaitList(this.currentUser.id, waitList).subscribe((schedule) => {
-            const msg = 'added to wait list succesfully';
+            const msg = 'Added to wait list succesfully';
             this.alertService.success(msg);
             this.getSchedules(this.selectedDate);
             });
     }
     cancelSchedule(scheduleId: string) {
+        console.log("scheduleId"+ scheduleId);
         this.scheduleService.cancelSchedule(this.currentUser.id, scheduleId).subscribe((schedule) => {
-           const msg ='canceled Successfully';
+           const msg ='Canceled Successfully';
             this.alertService.success(msg);
+            this.completeSchedules = this.formatSchedule();
             this.getSchedules(this.selectedDate);
             });
     }
     bookSchedule(schedule: Schedule) {
+        schedule.patientId = this.currentUser.id;
         this.scheduleService.bookSchedule(this.currentUser.id, schedule).subscribe((schedule) => {
             const msg ='Booked succesfully';
             this.alertService.success(msg);
             this.getSchedules(this.selectedDate);
         });
     }
+
+    getCompleteSchedules(schedule):any[]{
+        this.completeSchedules.forEach((cSchedule) => {
+           schedule.forEach((schedule) => {
+              if(schedule.chairId === cSchedule.chairId && schedule.shiftId === cSchedule.shiftId){
+                  cSchedule.patientId = schedule.patientId;
+                  cSchedule.scheduleId = schedule.scheduleId;
+                  cSchedule.clinicId = schedule.clinicId;
+                  cSchedule.shiftDate = schedule.shiftDate;
+              }
+           });
+        });
+        return this.completeSchedules;
+    }
+
+    formatSchedule(): any[]{
+       const newArr = [];
+       this.clinic.chairs.forEach((chair) => {
+           this.clinic.shifts.forEach((shift) => {
+               const Obj:Schedule = {
+                   shiftId: shift.shiftId,
+                   chairId: chair.chairId,
+                   clinicId: "1",
+                   shiftDate: this.selectedDate,
+                   patientId: ""
+               };
+               newArr.push(Obj);
+           });
+       });
+        return newArr;
+    }
+
 
     isAlreadyWaitListed(shiftId: any, chairId: any): boolean {
         const matchingKey = this.waitLists.findIndex(waitList => waitList.shiftId === shiftId && waitList.chairId === chairId);

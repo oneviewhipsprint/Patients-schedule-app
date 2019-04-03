@@ -37,7 +37,10 @@
                                      <span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && !isAlreadyWaitListed(shift.shiftId, chair.chairId)">
                                          <ion-icon  name="person-add" (click)="addToWaitList(schedule)"></ion-icon>
                                      </span>
-                            </span>
+                                     <span *ngIf="!schedule.patientId">
+                                        <ion-icon  name="checkmark-circle"(click)="bookSchedule(schedule)"></ion-icon>
+                                     </span>
+                                 </span>
                             </span>
                     </td>
                 </tr>

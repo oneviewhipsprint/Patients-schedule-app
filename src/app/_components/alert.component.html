@@ -1,4 +1,4 @@
 ﻿<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
     {{message.text}} <span *ngIf="message.link"><a (click)="linkClicked(message.link)">{{message.link}}</a></span>
-    <span style="color:blue;margin-left:1000px;" (click)="close()"> X </span>
+    <span style="color:blue;right: 0px;float: right" (click)="close()"> X </span>
 </div>

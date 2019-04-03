@@ -21,6 +21,7 @@ export class Schedule {
     chairId?: any;
     shiftId?: any;
     shiftDate?: any;
+    reminderSent?:boolean;
 }
 
 export class WaitList {
