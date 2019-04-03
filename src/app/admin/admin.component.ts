@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     clinic: Clinic = {};
     completeSchedules: Schedule[]=[];
     selectedDate: string;
+    selectedPatient: User = {};
 
     constructor(private authenticationService: AuthenticationService,
                 private userService: UserService,
@@ -73,6 +74,11 @@ export class AdminComponent implements OnInit, OnDestroy {
         });
     }
 
+    selectPatient(event){
+        this.selectedPatient = this.users.find( user => user.firstName === event);
+        console.log("selected patient"+ JSON.stringify(this.selectedPatient));
+        //this.selectedPatient = event;
+    }
     onPanelClose() {
         this.selectedDate = "";
         this.togglePanel = false;
@@ -89,7 +95,7 @@ export class AdminComponent implements OnInit, OnDestroy {
             console.log("Orginal Schedules" + JSON.stringify(schedule));
             this.schedules = this.getCompleteSchedules(schedule);
             console.log("Schedules" + JSON.stringify(this.schedules));
-            this.waitListsService.getWaitLists(this.currentUser.id, selectedDate).subscribe((waitLists) => {
+            this.waitListsService.getWaitLists(this.selectedPatient.id, selectedDate).subscribe((waitLists) => {
                 console.log("waitList" + JSON.stringify(waitLists));
                 this.waitLists = waitLists;
                 this.togglePanel = true;
@@ -102,11 +108,11 @@ export class AdminComponent implements OnInit, OnDestroy {
         waitList.shiftId = schedule.shiftId;
         waitList.clinicId = schedule.clinicId;
         waitList.chairId = schedule.chairId;
-        waitList.patientId = this.currentUser.id;
+        waitList.patientId = this.selectedPatient.id;
         waitList.shiftDate = schedule.shiftDate;
 
         waitList.status = 'pending';
-        this.scheduleService.addToWaitList(this.currentUser.id, waitList).subscribe((schedule) => {
+        this.scheduleService.addToWaitList(this.selectedPatient.id, waitList).subscribe((schedule) => {
             const msg = 'Added to wait list succesfully';
             this.alertService.success(msg);
             this.getSchedules(this.selectedDate);
@@ -114,7 +120,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
     cancelSchedule(scheduleId: string) {
         console.log("scheduleId"+ scheduleId);
-        this.scheduleService.cancelSchedule(this.currentUser.id, scheduleId).subscribe((schedule) => {
+        this.scheduleService.cancelSchedule(this.selectedPatient.id, scheduleId).subscribe((schedule) => {
             const msg ='Canceled Successfully';
             this.alertService.success(msg);
             this.completeSchedules = this.formatSchedule();
@@ -122,8 +128,8 @@ export class AdminComponent implements OnInit, OnDestroy {
         });
     }
     bookSchedule(schedule: Schedule) {
-        schedule.patientId = this.currentUser.id;
-        this.scheduleService.bookSchedule(this.currentUser.id, schedule).subscribe((schedule) => {
+        schedule.patientId = this.selectedPatient.id;
+        this.scheduleService.bookSchedule(this.selectedPatient.id, schedule).subscribe((schedule) => {
             const msg ='Booked succesfully';
             this.alertService.success(msg);
             this.getSchedules(this.selectedDate);

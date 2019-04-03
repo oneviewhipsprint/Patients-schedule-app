@@ -1,11 +1,16 @@
-﻿<app-date-panel (dateSelected)="onDateSelected($event)"></app-date-panel>
+﻿<div class="margin-down:10px;">
+    <select [(ngModel)]="selectedPatient.firstName" (ngModelChange)="selectPatient($event)">
+        <option *ngFor="let user of users; let i = index"> {{user.firstName}}</option>
+    </select>
+</div>
+<app-date-panel *ngIf="selectedPatient" (dateSelected)="onDateSelected($event)"></app-date-panel>
 <slide-panel [isOpen]="togglePanel" [title]="'Schedule Appointment'"
              (closeSlidePanel)="onPanelClose()" id="demo-slide-panel">
     <div panel-body>
         <div class="info">
             <span><ion-icon size="small" name="checkmark-circle"></ion-icon> To book a slot</span>
             <span> <ion-icon size="small" class="close-circle" name="close-circle"></ion-icon>To Cancel a slot</span>
-            <span><ion-icon  size="small" name="contacts"></ion-icon>To add to waitlist</span>
+            <span><ion-icon size="small" name="contacts"></ion-icon>To add to waitlist</span>
         </div>
         <div class="info">
             <span class="time"> Morning : 8am to 12pm</span>
@@ -23,23 +28,24 @@
                 <tbody>
                 <tr *ngFor="let shift of clinic.shifts">
                     <span class="label">{{shift.shiftName}}</span>
-                    <td  class="header" *ngFor="let chair of clinic.chairs">
+                    <td class="header" *ngFor="let chair of clinic.chairs">
                             <span *ngFor="let schedule of schedules">
                                  <span *ngIf="schedule.shiftId === shift.shiftId && schedule.chairId === chair.chairId;else book;">
                                      <span *ngIf="schedule.patientId && schedule.patientId == currentUser.id">
                                          {{schedule.patientId}}
                                          <ion-icon name="person"></ion-icon>
-                                         <ion-icon name="close-circle"(click)="cancelSchedule(schedule.scheduleId)"></ion-icon>
+                                         <ion-icon name="close-circle"
+                                                   (click)="cancelSchedule(schedule.scheduleId)"></ion-icon>
                                      </span>
 
-                                     <!--<span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && isAlreadyWaitListed(shift.shiftId, chair.chairId)">
-                                         <ion-icon name="people"></ion-icon>
-                                     </span>-->
-                                     <!--<span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && !isAlreadyWaitListed(shift.shiftId, chair.chairId)">
-                                         <ion-icon  name="person-add" (click)="addToWaitList(schedule)"></ion-icon>
-                                     </span>-->
+                                     <!--  <span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && isAlreadyWaitListed(shift.shiftId, chair.chairId)">
+                                           <ion-icon name="people"></ion-icon>
+                                       </span>
+                                      <span *ngIf="schedule.patientId && schedule.patientId != currentUser.id && !isAlreadyWaitListed(shift.shiftId, chair.chairId)">
+                                           <ion-icon  name="person-add" (click)="addToWaitList(schedule)"></ion-icon>
+                                       </span>-->
                                      <span *ngIf="!schedule.patientId">
-                                        <ion-icon  name="checkmark-circle"(click)="bookSchedule(schedule)"></ion-icon>
+                                        <ion-icon name="checkmark-circle" (click)="bookSchedule(schedule)"></ion-icon>
                                      </span>
                                  </span>
                             </span>

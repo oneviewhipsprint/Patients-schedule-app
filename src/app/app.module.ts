@@ -1,7 +1,7 @@
 ﻿import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDatepickerModule, BsLocaleService  } from 'ngx-bootstrap/datepicker';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
@@ -24,7 +24,8 @@ import {TableComp} from "@app/_components/table/table.component";
         ReactiveFormsModule,
         BsDatepickerModule.forRoot(),
         HttpClientModule,
-        routing
+        routing,
+        FormsModule
     ],
     declarations: [
         AppComponent,
